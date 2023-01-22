@@ -1,6 +1,7 @@
 from django.db import models
 from authentication.models import User
 from equipment.models import Equipment
+from services.models import Service
 
 
 # Create your models here.
@@ -13,6 +14,6 @@ class Provider(models.Model):
     address = models.CharField(max_length=255)
     email = models.CharField(max_length=75)
     equipment = models.ForeignKey(Equipment, on_delete=models.CASCADE)
-    services = models.CharField(max_length=255)
+    services = models.ForeignKey(Service, on_delete=models.CASCADE)
     business_description = models.CharField(max_length=255)
     payment_type = models.CharField(max_length=255)
