@@ -11,7 +11,7 @@ class Provider(models.Model):
     phone = models.IntegerField()
     address = models.CharField(max_length=255)
     email = models.CharField(max_length=75)
-    equipment = models.ForeignKey(, on_delete=models.CASCADE)
+    # equipment = models.ForeignKey(Equipment, on_delete=models.CASCADE)
     services = models.CharField(max_length=255)
     business_description = models.CharField(max_length=255)
     payment_type = models.CharField(max_length=255)
