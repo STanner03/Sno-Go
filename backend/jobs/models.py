@@ -6,7 +6,7 @@ from providers.models import Provider
 
 class Job(models.Model):
     client = models.ForeignKey(Client, on_delete=models.CASCADE)
-    provider = models.ForeignKey(Provider, on_delete=models.CASCADE)
+    provider = models.ForeignKey(Provider, on_delete=models.CASCADE, null = True)
     address = models.CharField(max_length=255)
     area_type = models.CharField(max_length=255)
     photo_required = models.BooleanField()

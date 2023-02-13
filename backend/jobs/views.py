@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.shortcuts import get_object_or_404
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, AllowAny
@@ -20,8 +21,7 @@ def get_all_jobs(request):
 @api_view(['GET', 'POST'])
 @permission_classes([IsAuthenticated])
 def user_jobs(request):
-    print(
-        'User ', f"{request.user.id} {request.user.email} {request.user.username}")
+    print('User ', f"{request.user.id} {request.user.email} {request.user.username}")
     if request.method == 'POST':
         serializer = JobSerializer(data=request.data)
         if serializer.is_valid():
@@ -32,3 +32,16 @@ def user_jobs(request):
         jobs = Job.objects.filter(user_id=request.user.id)
         serializer = JobSerializer(jobs, many=True)
         return Response(serializer.data)
+
+@api_view(['PUT', 'DELETE'])
+@permission_classes([IsAuthenticated])
+def update_job(request, pk):
+    job = get_object_or_404(Job, pk=pk)
+    if request.method == 'PUT':
+        serializer = JobSerializer(job, data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save(user_id=request.user.id)
+        return Response(serializer.data)
+    elif request.method == 'DELETE':
+        job.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
