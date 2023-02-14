@@ -5,4 +5,6 @@ urlpatterns = [
     path('', views.user_clients),
     path('all/', views.get_all_clients),
     path('<int:pk>/update/', views.update_client),
+    path('<int:cpk>/jobs/', include('jobs.urls')),
+
 ]

@@ -20,27 +20,26 @@ def get_all_jobs(request):
 
 @api_view(['GET', 'POST'])
 @permission_classes([IsAuthenticated])
-def user_jobs(request):
-    print('User ', f"{request.user.id} {request.user.email} {request.user.username}")
+def user_jobs(request, cpk):
+    print("REQUEST/RESPONSE!!!", cpk)
     if request.method == 'POST':
         serializer = JobSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save(user=request.user)
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        serializer.is_valid(raise_exception=True)
+        serializer.save(client_id=cpk)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
     elif request.method == 'GET':
-        jobs = Job.objects.filter(user_id=request.user.id)
+        jobs = Job.objects.filter(client_id=cpk)
         serializer = JobSerializer(jobs, many=True)
         return Response(serializer.data)
 
 @api_view(['PUT', 'DELETE'])
 @permission_classes([IsAuthenticated])
-def update_job(request, pk):
+def update_job(request, cpk, pk):
     job = get_object_or_404(Job, pk=pk)
     if request.method == 'PUT':
         serializer = JobSerializer(job, data=request.data)
         serializer.is_valid(raise_exception=True)
-        serializer.save(user_id=request.user.id)
+        serializer.save(client_id=cpk)
         return Response(serializer.data)
     elif request.method == 'DELETE':
         job.delete()
