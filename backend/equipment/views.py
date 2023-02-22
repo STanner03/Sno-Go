@@ -53,13 +53,13 @@ def add_equipment(request):
 
 
 @api_view(['PUT', 'DELETE'])
-@permission_classes([IsAuthenticated])
-def update_equipment(request, ppk, pk):
+@staff_member_required()
+def update_equipment(request, pk):
     equipment = get_object_or_404(Equipment, pk=pk)
     if request.method == 'PUT':
         serializer = EquipmentSerializer(equipment, data=request.data)
         serializer.is_valid(raise_exception=True)
-        serializer.save(user_id=request.user.id, provider_id=ppk)
+        serializer.save()
         return Response(serializer.data)
     elif request.method == 'DELETE':
         equipment.delete()
