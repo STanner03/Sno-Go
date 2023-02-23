@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.shortcuts import get_object_or_404
 from rest_framework import status
 from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework.permissions import AllowAny
 from rest_framework.decorators import api_view, permission_classes
 from django.contrib.auth import REDIRECT_FIELD_NAME
 from django.contrib.auth.decorators import user_passes_test
@@ -44,7 +44,6 @@ def get_providers_equipment(request, ppk):
 @api_view(['POST'])
 @staff_member_required()
 def add_equipment(request):
-    print("ADD EQUIPMENT", request)
     if request.method == 'POST':
         serializer = EquipmentSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
