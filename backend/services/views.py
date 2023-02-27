@@ -47,17 +47,14 @@ def update_providers_services(request, ppk, pk):
     service = get_object_or_404(Service, pk=pk)
     provider = get_object_or_404(Provider, pk=ppk)
     if request.method == 'PUT':
-        add_service_to_provider = provider.services.add(service)
-        # service_serializer = ServiceSerializer(service, data=request.data)
-        # provider_serializer = ProviderSerializer(provider, data=request.data)
-        # service_serializer.is_valid(raise_exception=True)
-        # provider_serializer.is_valid(raise_exception=True)
-        # service_serializer.save(id=pk)
-        # provider_serializer.save(id=ppk)
-        return Response(add_service_to_provider, status=status.HTTP_202_ACCEPTED)
+        provider.services.add(service)
+        serializer = ServiceSerializer(service, data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save(id=pk)
+        return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
     elif request.method == 'DELETE':
-        remove_service_from_provider = provider.services.remove(service)
-        return Response(remove_service_from_provider, status=status.HTTP_204_NO_CONTENT)
+        provider.services.remove(service)
+        return Response("Success", status=status.HTTP_204_NO_CONTENT)
 
 
 @api_view(['POST'])
