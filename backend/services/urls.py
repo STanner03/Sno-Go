@@ -5,5 +5,6 @@ urlpatterns = [
     path('add/', views.add_services),
     path('all/', views.get_all_services),
     path('provider/', views.get_providers_services),
+    path('provider/<int:pk>/', views.update_providers_services),
     path('<int:pk>/update/', views.update_service),
 ]

@@ -2,12 +2,14 @@ from django.shortcuts import render
 from django.shortcuts import get_object_or_404
 from rest_framework import status
 from rest_framework.response import Response
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.decorators import api_view, permission_classes
 from django.contrib.auth import REDIRECT_FIELD_NAME
 from django.contrib.auth.decorators import user_passes_test
 from .models import Service
 from .serializers import ServiceSerializer
+from providers.models import Provider
+from providers.serializers import ProviderSerializer
 
 # Create your views here.
 
@@ -36,9 +38,27 @@ def get_all_services(request):
 @api_view(['Get'])
 @permission_classes([AllowAny])
 def get_providers_services(request, ppk):
-    services = Service.objects.filter(provider=ppk)
+    services = Service.objects.filter(providers=ppk)
     serializer = ServiceSerializer(services, many=True)
     return Response(serializer.data)
+
+@api_view(['PUT', 'DELETE'])
+@permission_classes([IsAuthenticated])
+def update_providers_services(request, ppk, pk):
+    service = get_object_or_404(Service, pk=pk)
+    provider = get_object_or_404(Provider, pk=ppk)
+    if request.method == 'PUT':
+        add_service_to_provider = provider.services.add(service)
+        # service_serializer = ServiceSerializer(service, data=request.data)
+        # provider_serializer = ProviderSerializer(provider, data=request.data)
+        # service_serializer.is_valid(raise_exception=True)
+        # provider_serializer.is_valid(raise_exception=True)
+        # service_serializer.save(id=pk)
+        # provider_serializer.save(id=ppk)
+        return Response(add_service_to_provider, status=status.HTTP_202_ACCEPTED)
+    elif request.method == 'DELETE':
+        remove_service_from_provider = provider.services.remove(service)
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 @api_view(['POST'])

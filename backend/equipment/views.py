@@ -36,7 +36,7 @@ def get_all_equipment(request):
 @api_view(['Get'])
 @permission_classes([AllowAny])
 def get_providers_equipment(request, ppk):
-    equipment = Equipment.objects.filter(provider=ppk)
+    equipment = Equipment.objects.filter(providers=ppk)
     serializer = EquipmentSerializer(equipment, many=True)
     return Response(serializer.data)
 
