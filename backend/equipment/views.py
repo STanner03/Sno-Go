@@ -2,12 +2,14 @@ from django.shortcuts import render
 from django.shortcuts import get_object_or_404
 from rest_framework import status
 from rest_framework.response import Response
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.decorators import api_view, permission_classes
 from django.contrib.auth import REDIRECT_FIELD_NAME
 from django.contrib.auth.decorators import user_passes_test
 from .models import Equipment
 from .serializers import EquipmentSerializer
+from providers.models import Provider
+
 
 # Create your views here.
 
@@ -39,6 +41,19 @@ def get_providers_equipment(request, ppk):
     equipment = Equipment.objects.filter(providers=ppk)
     serializer = EquipmentSerializer(equipment, many=True)
     return Response(serializer.data)
+
+
+@api_view(['PUT', 'DELETE'])
+@permission_classes([IsAuthenticated])
+def update_providers_equipment(request, ppk, pk):
+    equip = get_object_or_404(Equipment, pk=pk)
+    provider = get_object_or_404(Provider, pk=ppk)
+    if request.method == 'PUT':
+        add_equipment_to_provider = provider.equipment.add(equip)
+        return Response(add_equipment_to_provider, status=status.HTTP_202_ACCEPTED)
+    elif request.method == 'DELETE':
+        remove_equipment_from_provider = provider.equipment.remove(equip)
+        return Response(remove_equipment_from_provider, status=status.HTTP_204_NO_CONTENT)
 
 
 @api_view(['POST'])

@@ -9,7 +9,6 @@ from django.contrib.auth.decorators import user_passes_test
 from .models import Service
 from .serializers import ServiceSerializer
 from providers.models import Provider
-from providers.serializers import ProviderSerializer
 
 # Create your views here.
 
@@ -58,7 +57,7 @@ def update_providers_services(request, ppk, pk):
         return Response(add_service_to_provider, status=status.HTTP_202_ACCEPTED)
     elif request.method == 'DELETE':
         remove_service_from_provider = provider.services.remove(service)
-        return Response(status=status.HTTP_204_NO_CONTENT)
+        return Response(remove_service_from_provider, status=status.HTTP_204_NO_CONTENT)
 
 
 @api_view(['POST'])
