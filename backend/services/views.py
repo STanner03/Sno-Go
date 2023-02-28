@@ -48,10 +48,7 @@ def update_providers_services(request, ppk, pk):
     provider = get_object_or_404(Provider, pk=ppk)
     if request.method == 'PUT':
         provider.services.add(service)
-        serializer = ServiceSerializer(service, data=request.data)
-        serializer.is_valid(raise_exception=True)
-        serializer.save(id=pk)
-        return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
+        return Response("Accepted", status=status.HTTP_202_ACCEPTED)
     elif request.method == 'DELETE':
         provider.services.remove(service)
         return Response("Success", status=status.HTTP_204_NO_CONTENT)
