@@ -5,5 +5,5 @@ class JobSerializer(serializers.ModelSerializer):
     class Meta:
         model = Job
         fields = ['id', 'client_id', 'provider_id', 'address',
-                  'area_type', 'photo_required', 'recurring', 'cash_only']
+                  'services', 'photo_required', 'recurring', 'cash_only', 'total_price', 'date_requested', 'date_completed', 'paid']
         depth = 1
