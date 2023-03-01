@@ -9,6 +9,7 @@ from .serializers import ClientSerializer
 
 # Create your views here.
 
+
 @api_view(['GET'])
 @permission_classes([AllowAny])
 def get_all_clients(request):

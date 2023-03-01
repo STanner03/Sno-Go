@@ -27,6 +27,7 @@ def staff_member_required(view_func=None, redirect_field_name=REDIRECT_FIELD_NAM
         return actual_decorator(view_func)
     return actual_decorator
 
+
 @api_view(['Get'])
 @permission_classes([AllowAny])
 def get_all_equipment(request):

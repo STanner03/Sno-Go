@@ -27,6 +27,7 @@ def get_job_services(request, jpk):
     serializer = ServiceSerializer(services, many=True)
     return Response(serializer.data)
 
+
 @api_view(['POST', 'PUT', 'DELETE'])
 @permission_classes([IsAuthenticated])
 def update_job_services(request, jpk, pk):
@@ -56,6 +57,7 @@ def client_jobs(request, cpk):
         jobs = Job.objects.filter(client_id=cpk)
         serializer = JobSerializer(jobs, many=True)
         return Response(serializer.data)
+
 
 @api_view(['PUT', 'DELETE'])
 @permission_classes([IsAuthenticated])

@@ -5,6 +5,7 @@ from services.models import Service
 
 # Create your models here.
 
+
 class Job(models.Model):
     client = models.ForeignKey(Client, on_delete=models.CASCADE)
     provider = models.ForeignKey(Provider, on_delete=models.CASCADE, null=True)

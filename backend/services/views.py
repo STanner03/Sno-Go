@@ -12,6 +12,7 @@ from providers.models import Provider
 
 # Create your views here.
 
+
 def staff_member_required(view_func=None, redirect_field_name=REDIRECT_FIELD_NAME, login_url='admin:login'):
     """
     Decorator for views that checks that the user is logged in and is a staff
@@ -25,6 +26,7 @@ def staff_member_required(view_func=None, redirect_field_name=REDIRECT_FIELD_NAM
     if view_func:
         return actual_decorator(view_func)
     return actual_decorator
+
 
 @api_view(['Get'])
 @permission_classes([AllowAny])
@@ -40,6 +42,7 @@ def get_providers_services(request, ppk):
     services = Service.objects.filter(providers=ppk)
     serializer = ServiceSerializer(services, many=True)
     return Response(serializer.data)
+
 
 @api_view(['PUT', 'DELETE'])
 @permission_classes([IsAuthenticated])
