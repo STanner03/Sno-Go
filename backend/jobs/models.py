@@ -14,7 +14,7 @@ class Job(models.Model):
     photo_required = models.BooleanField(null=True)
     recurring = models.BooleanField(null=True)
     cash_only = models.BooleanField(null=True)
-    total_price = models.IntegerField(null=True)
+    total_price = models.FloatField(null=True)
     date_requested = models.DateTimeField()
     date_completed = models.DateTimeField(null=True)
     paid = models.BooleanField(null=True)
