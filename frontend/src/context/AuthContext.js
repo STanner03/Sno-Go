@@ -63,9 +63,8 @@ export const AuthProvider = ({ children }) => {
         navigate("/register");
       }
     } catch (error) {
-      console.log(error.response.data);
+      console.log("Catch ERROR: ", error.response.data);
       setIsServerError(true);
-      navigate("/register");
     }
   };
 
