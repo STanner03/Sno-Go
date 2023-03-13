@@ -7,7 +7,6 @@ const RegisterPage = () => {
   const [email1, setEmail1] = useState("");
   const [show, setShow] = useState(false);
   const { registerUser } = useContext(AuthContext);
-  let counter = 0
   const defaultValues = {
     username: "",
     email: "",
@@ -22,25 +21,18 @@ const RegisterPage = () => {
   useEffect(() => {
     if (password1 === formData.password && email1 === formData.email) {
       setShow(true);
-      counter+=1
-      console.log("Counter:", counter)
     } else {
       setShow(false);
-      counter-=1
-      console.log("Counter:", counter)
     }
-  }, [password1, formData.password, email1, formData.email])
+  }, [password1, formData.password, email1, formData.email]);
   const validatePassword1 = (e) => {
-    e.preventDefault()
-    setPassword1(e.target.value) 
+    e.preventDefault();
+    setPassword1(e.target.value);
   };
   const validateEmail = (e) => {
-    e.preventDefault()
-    setEmail1(e.target.value)
-  }
-  console.log("formData:", formData);
-  console.log("password1:", password1);
-  console.log("formData.password:", formData.password);
+    e.preventDefault();
+    setEmail1(e.target.value);
+  };
 
   return (
     <div className="container">
@@ -112,7 +104,11 @@ const RegisterPage = () => {
           NOTE: Make this an uncommon password with characters, numbers, and
           special characters!
         </p>
-        {show ? <button>Register!</button> : <p>Check Credentials so they match!!!</p>}
+        {show ? (
+          <button>Register!</button>
+        ) : (
+          <p>Check Credentials so they match!!!</p>
+        )}
       </form>
     </div>
   );
