@@ -100,9 +100,10 @@ const RegisterPage = () => {
             onChange={validatePassword1}
           />
         </label>
+        <p>NOTE:</p>
         <p style={{ fontSize: "12px" }}>
-          NOTE: Make this an uncommon password with characters, numbers, and
-          special characters!
+          Make this an uncommon password with letters, numbers, and special
+          characters!
         </p>
         {show ? (
           <button>Register!</button>
