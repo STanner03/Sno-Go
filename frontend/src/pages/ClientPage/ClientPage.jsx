@@ -1,14 +1,17 @@
+// General Imports
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import useAuth from "../../hooks/useAuth";
-
 import axios from "axios";
+
+// Page Imports
+import ClientCard from "../../components/ClientCard/ClientCard";
+import JobCard from "../../components/JobCard/JobCard";
 
 const ClientPage = () => {
   // State Functions
   const [user, token] = useAuth();
-  const [userType, setUserType] = useState("");
   const [jobs, setJobs] = useState([]);
   const [clients, setClients] = useState([]);
   const [activeClient, setActiveClient] = useState();
@@ -73,19 +76,39 @@ const ClientPage = () => {
   console.log("Clients:", clients);
 
   return (
-    <div>
+    <>
       {activeClient && (
-        <div className="container">
-          <h1>Home Page for {activeClient.first_name}!</h1>
-          {jobs &&
-            jobs.map((job, i) => (
-              <p key={job.id}>
-                {(i += 1)} {job.address} {job.total_price} {job.paid}
-              </p>
-            ))}
-        </div>
+        <>
+          <div className="container">
+            <h1>
+              Home Page for {activeClient.first_name} {activeClient.last_name}!
+            </h1>
+          </div>
+          <>
+            <ClientCard />
+            History
+            {jobs && (
+              <table>
+                <thead>
+                  <th>Date</th>
+                  <th> </th>
+                  <th>Address</th>
+                  <th> </th>
+                  <th>Cost</th>
+                  <th> </th>
+                  <th>Paid?</th>
+                </thead>
+                {jobs.map((job, i) => (
+                  <tbody key={job.id}>
+                    <JobCard job={job} />
+                  </tbody>
+                ))}
+              </table>
+            )}
+          </>
+        </>
       )}
-    </div>
+    </>
   );
 };
 

@@ -37,7 +37,7 @@ const HomePage = () => {
     <div>
       {!userType && (
         <div>
-          <h1>Are you a Client or a Provider?</h1>
+          <h1>Are you a Client or a Provider today?</h1>
           <button onClick={selectClientView}>Client</button>
           <button onClick={selectProviderView}>Provider</button>
         </div>
