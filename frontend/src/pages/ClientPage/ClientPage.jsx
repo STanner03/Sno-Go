@@ -94,6 +94,12 @@ const ClientPage = () => {
                   <th> </th>
                   <th>Address</th>
                   <th> </th>
+                  <th>Completed?</th>
+                  <th> </th>
+                  <th>Completion Date</th>
+                  <th> </th>
+                  <th>Recurring</th>
+                  <th> </th>
                   <th>Cost</th>
                   <th> </th>
                   <th>Paid?</th>

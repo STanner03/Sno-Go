@@ -1,4 +1,5 @@
 footer {
+  display: flex;
   position: static;
   bottom: 0;
   font-size: 1.2rem;
@@ -6,4 +7,9 @@ footer {
   padding: 1rem;
   text-align: center;
   width: 100%;
+  color: red;
+  background-color: rgba(148, 236, 248, 0);
+  z-index: 0;
+  justify-content: center;
+  align-items: flex-end;
 }

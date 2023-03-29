@@ -18,6 +18,12 @@ const JobCard = ({ job }) => {
       <td> </td>
       <td> {job.address} </td>
       <td> </td>
+      <td> {job.date_completed ? ("Complete") : ("No")} </td>
+      <td> </td>
+      <td> {job.date_completed} </td>
+      <td> </td>
+      <td> {job.recurring} </td>
+      <td> </td>
       <td> ${job.total_price} </td>
       <td> </td>
       <td> {paid} </td>

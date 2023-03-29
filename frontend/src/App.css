@@ -56,3 +56,13 @@ button:hover {
   padding: 3px 7px;
   font-size: 17px;
 }
+
+.background {
+  background: url(./Assets/Snowflakes.jpg);
+  background-repeat: no-repeat;
+  background-color: #550202;
+  background-position: center;
+  background-size: cover;
+  position: relative;
+  min-height: 100vh;
+}
