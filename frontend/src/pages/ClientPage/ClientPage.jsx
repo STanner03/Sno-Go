@@ -1,6 +1,6 @@
 // General Imports
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import useAuth from "../../hooks/useAuth";
 import axios from "axios";
@@ -80,6 +80,8 @@ const ClientPage = () => {
       {activeClient && (
         <>
           <div className="container">
+            <h3>Client</h3>
+            <Link to="/providerpage">Become a Snow Remover</Link>
             <h1>
               Home Page for {activeClient.first_name} {activeClient.last_name}!
             </h1>
