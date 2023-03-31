@@ -14,6 +14,7 @@ const ClientPage = () => {
   const [user, token] = useAuth();
   const [jobs, setJobs] = useState([]);
   const [clients, setClients] = useState([]);
+  const [providers, setProviders] = useState([]);
   const [activeClient, setActiveClient] = useState();
   const navigate = useNavigate();
 
@@ -72,6 +73,23 @@ const ClientPage = () => {
     // console.log("Client First Name:", activeClient.first_name);
   }, [token, activeClient]);
 
+  useEffect(() => {
+    const fetchProviders = async () => {
+      try {
+        let response = await axios.get("http://127.0.0.1:8000/api/providers/all/", {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        });
+        setProviders(response.data);
+        console.log("ASYNC Providers: ", response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchProviders();
+}, [token]);
+
   // Console Logs:
   console.log("Clients:", clients);
 
@@ -81,9 +99,9 @@ const ClientPage = () => {
         <>
           <div className="container">
             <h3>Client</h3>
-            <Link to="/providerpage">Become a Snow Remover</Link>
+            <Link to="/providerpage">Switch to Snow Remover</Link>
             <h1>
-              Home Page for {activeClient.first_name} {activeClient.last_name}!
+              Home Page for {user.first_name} {user.last_name}!
             </h1>
           </div>
           <>
@@ -100,6 +118,8 @@ const ClientPage = () => {
                   <th> </th>
                   <th>Completion Date</th>
                   <th> </th>
+                  <th> Snow Remover </th>
+                  <th> </th>
                   <th>Recurring</th>
                   <th> </th>
                   <th>Cost</th>
@@ -108,7 +128,7 @@ const ClientPage = () => {
                 </thead>
                 {jobs.map((job, i) => (
                   <tbody key={job.id}>
-                    <JobCard job={job} />
+                    <JobCard job={job} providers={providers} />
                   </tbody>
                 ))}
               </table>

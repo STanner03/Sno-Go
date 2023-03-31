@@ -34,7 +34,7 @@ const HomePage = () => {
   };
 
   return (
-    <div>
+    <div className="container">
       {!userType && (
         <div>
           <h1>Are you a Client or a Provider today?</h1>
