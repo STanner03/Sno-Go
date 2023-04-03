@@ -8,20 +8,24 @@ import axios from "axios";
 const JobCard = ({ job, providers }) => {
   // State Functions
   const [user, token] = useAuth();
-  const [jobProvider, setJobProvider] = useState([]);
+  const [jobProvider, setJobProvider] = useState([null]);
 
   // UseEffects
   useEffect(() => {
     const createJobProvider = () => {
       try {
-        if (providers.length === 1) {
-          setJobProvider(providers[0]);
-        } else if (providers.length > 1) {
+        if (providers.length > 0) {
           let temp = providers.filter((id) => job.provider_id);
-          setJobProvider(temp);
-          console.log("Temp", temp);
-        } else {setJobProvider(null)}
-        console.log("Job Provider: ", jobProvider);
+          if (job.provider_id == null) {
+            setJobProvider(null);
+            console.log("No Job Provider: ", jobProvider);
+          } else {
+            setJobProvider(temp[0]);
+            console.log("Found Job Provider", temp[0]);
+          }
+        } else {
+          setJobProvider(null);
+        }
       } catch (error) {
         console.log("Job Provider ERROR: ", error);
       }
@@ -42,6 +46,7 @@ const JobCard = ({ job, providers }) => {
   }
 
   console.log("Job", job);
+  console.log("Job Provider", jobProvider);
 
   return (
     <>
@@ -51,14 +56,16 @@ const JobCard = ({ job, providers }) => {
       <td> </td>
       <td> {job.date_completed ? "Complete" : "No"} </td>
       <td> </td>
-      <td> {job.date_completed} </td>
+      <td> {job.date_completed ? `${job.date_completed}` : "TBD"} </td>
       <td> </td>
       <td>
         {" "}
-        {jobProvider.first_name} {jobProvider.last_name}{" "}
+        {job.provider_id
+          ? `${jobProvider.first_name} ${jobProvider.last_name}`
+          : null}
       </td>
       <td> </td>
-      <td> {job.recurring} </td>
+      <td> {job.recurring ? "Yes" : "No"} </td>
       <td> </td>
       <td> ${job.total_price} </td>
       <td> </td>
